@@ -65,7 +65,6 @@ func CacheGetTokenByKey(key string) (*Token, error) {
 func SyncTokenCache(frequency int) {
 	for {
 		time.Sleep(time.Duration(frequency) * time.Second)
-		common.SysLog("syncing tokens from database")
 		token2UserIdLock.Lock()
 		// 从token2UserId中获取所有的key
 		var copyToken2UserId = make(map[string]int)
@@ -255,13 +254,11 @@ func InitChannelCache() {
 	group2model2channels = newGroup2model2channels
 	channelsIDM = newChannelsIDM
 	channelSyncLock.Unlock()
-	common.SysLog("channels synced from database")
 }
 
 func SyncChannelCache(frequency int) {
 	for {
 		time.Sleep(time.Duration(frequency) * time.Second)
-		common.SysLog("syncing channels from database")
 		InitChannelCache()
 	}
 }
